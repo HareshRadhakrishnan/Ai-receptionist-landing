@@ -129,14 +129,18 @@ const icons = {
   ),
   check: <path d="m5 12.5 4.5 4.5L19 7.5" />,
   chevron: <path d="m6 9 6 6 6-6" />,
-  moon: <path d="M20 14A8 8 0 1 1 10 4a7 7 0 0 0 10 10z" />,
-  sunset: (
+  bolt: (
     <>
-      <path d="M12 9V3M5.6 10.6 3 8M18.4 10.6 21 8" />
-      <path d="M4 16h16M6 20h12" />
-      <path d="M12 13a4 4 0 0 0-4 4h8a4 4 0 0 0-4-4z" />
+      <path d="M13 2 4 14h7l-1 8 9-12h-7l1-8z" />
     </>
   ),
+  layers: (
+    <>
+      <path d="M12 2 2 7l10 5 10-5-10-5z" />
+      <path d="m2 17 10 5 10-5M2 12l10 5 10-5" />
+    </>
+  ),
+  moon: <path d="M20 14A8 8 0 1 1 10 4a7 7 0 0 0 10 10z" />,
 };
 
 /* ---------- sections ---------- */
@@ -199,7 +203,7 @@ function Hero() {
             </a>
           </div>
           <p className="mt-7 text-sm text-slate-500">
-            Free trial available · Works with your existing number · Set up in a day
+            Free trial · No credit card · No hardware · Cancel anytime · No contract
           </p>
         </div>
 
@@ -260,9 +264,12 @@ function Hero() {
 
 function StatBar() {
   const stats = [
-    { value: "Up to 62%", label: "of calls to small businesses go unanswered" },
-    { value: "80%", label: "of callers who reach voicemail don't leave a message" },
-    { value: "85%", label: "of callers whose call isn't answered won't call back" },
+    { value: "62%", label: "of SMB calls hit voicemail or ring out" },
+    { value: "85%", label: "won't call back — they call a competitor instead" },
+    {
+      value: "100×",
+      label: "lower close odds when follow-up waits 30 min vs 5 min",
+    },
   ];
   return (
     <section className="border-y border-slate-200/70 bg-white">
@@ -285,18 +292,31 @@ function Problem() {
   const cards = [
     {
       icon: icons.moon,
-      title: "After hours",
-      body: "A customer needs help at 9 PM. You closed at 5. By morning they've booked with the next listing on Google.",
+      title: "After-hours & weekends",
+      stat: "38% of call volume",
+      body: "Arrives when you're closed or off the clock. Those callers don't wait until Monday — they book with whoever answers.",
     },
     {
       icon: icons.wrench,
-      title: "On a job",
-      body: "You're up a ladder or under a sink. The phone rings out. That was a paying job you never knew about.",
+      title: "Busy lines",
+      stat: "24% of callers",
+      body: "Hit a busy signal or endless ring while you're on a job. One line, one tech — and the next name on Google gets the work.",
     },
     {
-      icon: icons.sunset,
-      title: "Lunch rush & holidays",
-      body: "The front desk is swamped or it's a long weekend. Voicemail fills up. Callers hang up instead of leaving a message.",
+      icon: icons.phone,
+      title: "Voicemail",
+      stat: "<3% leave a message",
+      body: "97% hang up. No message, no callback, no second chance — the lead is gone before you check your inbox.",
+    },
+  ];
+  const extras = [
+    {
+      title: "Wasted ad dollars",
+      body: "Google and Meta ads send ready-to-buy callers to your number. If it rings out, you're paying to lose them.",
+    },
+    {
+      title: "Follow-up never happens",
+      body: "80% of sales need 5+ follow-ups, but 44% of reps stop after one. Missed calls rarely get a second touch.",
     },
   ];
   return (
@@ -307,8 +327,10 @@ function Problem() {
           Every missed call is a customer calling your competitor.
         </h2>
         <p className="mt-4 max-w-2xl text-lg text-slate-600">
-          You can't answer the phone while you're working. That's exactly when
-          customers call — and they don't wait.
+          You can't answer the phone while you're working — and unanswered calls
+          cost the average business over{" "}
+          <span className="font-semibold text-ink">$126,000 a year</span>. That's
+          exactly when customers call, and they don't wait.
         </p>
         <div className="mt-12 grid gap-6 md:grid-cols-3">
           {cards.map((c) => (
@@ -316,11 +338,28 @@ function Problem() {
               <span className="grid h-11 w-11 place-items-center rounded-xl bg-brand-50 text-brand-700">
                 <Icon path={c.icon} />
               </span>
-              <h3 className="mt-5 text-lg font-bold text-ink">{c.title}</h3>
+              <p className="mt-5 text-sm font-bold text-brand-700">{c.stat}</p>
+              <h3 className="mt-1 text-lg font-bold text-ink">{c.title}</h3>
               <p className="mt-2 text-sm leading-relaxed text-slate-600">{c.body}</p>
             </div>
           ))}
         </div>
+        <ul className="mt-8 grid gap-4 sm:grid-cols-2">
+          {extras.map((e) => (
+            <li
+              key={e.title}
+              className="flex gap-3 rounded-2xl border border-slate-200/80 bg-white px-5 py-4 shadow-soft"
+            >
+              <span className="mt-0.5 grid h-5 w-5 shrink-0 place-items-center rounded-full bg-brand-100 text-brand-700">
+                <Icon path={icons.check} className="h-3.5 w-3.5" />
+              </span>
+              <div>
+                <p className="text-sm font-bold text-ink">{e.title}</p>
+                <p className="mt-1 text-sm leading-relaxed text-slate-600">{e.body}</p>
+              </div>
+            </li>
+          ))}
+        </ul>
         <p className="mt-10 text-lg font-bold text-brand-700">
           Your competitor answered. That's the whole story.
         </p>
@@ -376,6 +415,16 @@ function Features() {
     { icon: icons.phone, title: "Takes messages & sends summaries", body: "Every call recapped to your phone as text." },
     { icon: icons.spam, title: "Filters spam & robocalls", body: "Junk never reaches you." },
     { icon: icons.plug, title: "Works with what you have", body: "Your existing number, your existing calendar. No hardware." },
+    {
+      icon: icons.bolt,
+      title: "Instant follow-up",
+      body: "Text-back missed calls within 10 seconds so ready-to-buy callers don't slip away.",
+    },
+    {
+      icon: icons.layers,
+      title: "Unlimited parallel calls",
+      body: "Several customers call at once — every line answered. No busy signal, no queue.",
+    },
   ];
   return (
     <section className="section-y">
@@ -394,6 +443,87 @@ function Features() {
               <p className="mt-1.5 text-sm leading-relaxed text-slate-600">{f.body}</p>
             </div>
           ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function Comparison() {
+  const rows = [
+    {
+      label: "Response speed",
+      traditional: "Delayed — rings out or goes to voicemail",
+      commitly: "Instant on the first ring",
+    },
+    {
+      label: "After-hours coverage",
+      traditional: "Limited or costly call-center overflow",
+      commitly: "24/7/365 — same quality every hour",
+    },
+    {
+      label: "Call capacity",
+      traditional: "One line — busy signal when you're on a job",
+      commitly: "Unlimited parallel calls",
+    },
+    {
+      label: "Booking",
+      traditional: "Manual callbacks and back-and-forth",
+      commitly: "Real-time calendar sync on the call",
+    },
+    {
+      label: "Annual cost",
+      traditional: "$35,000–$45,000+ for a full-time front desk",
+      commitly: "Save up to 85% vs hiring in-house",
+    },
+  ];
+  return (
+    <section className="section-y bg-white">
+      <div className="container-x">
+        <p className="eyebrow">Compare</p>
+        <h2 className="mt-3 max-w-2xl text-3xl font-extrabold tracking-tight sm:text-4xl">
+          Traditional front desk vs Commitly Labs
+        </h2>
+        <p className="mt-4 max-w-2xl text-lg text-slate-600">
+          Same customers, same phone number — very different outcomes when every
+          call gets answered.
+        </p>
+        <div className="mt-10 overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-soft">
+          <div className="hidden sm:grid sm:grid-cols-[1.1fr_1fr_1fr] sm:border-b sm:border-slate-200 sm:bg-slate-50/80">
+            <div className="px-5 py-4 text-xs font-bold uppercase tracking-wide text-slate-500" />
+            <div className="border-l border-slate-200 px-5 py-4 text-xs font-bold uppercase tracking-wide text-slate-500">
+              Traditional front desk
+            </div>
+            <div className="border-l border-slate-200 px-5 py-4 text-xs font-bold uppercase tracking-wide text-brand-700">
+              Commitly Labs AI
+            </div>
+          </div>
+          <ul className="divide-y divide-slate-200">
+            {rows.map((row) => (
+              <li
+                key={row.label}
+                className="grid gap-3 px-5 py-5 sm:grid-cols-[1.1fr_1fr_1fr] sm:gap-0 sm:py-0"
+              >
+                <p className="text-sm font-bold text-ink sm:py-4">{row.label}</p>
+                <div className="sm:border-l sm:border-slate-200 sm:px-5 sm:py-4">
+                  <p className="text-xs font-semibold uppercase tracking-wide text-slate-400 sm:hidden">
+                    Traditional
+                  </p>
+                  <p className="mt-0.5 text-sm leading-relaxed text-slate-600 sm:mt-0">
+                    {row.traditional}
+                  </p>
+                </div>
+                <div className="rounded-xl bg-brand-50/80 px-4 py-3 sm:rounded-none sm:border-l sm:border-slate-200 sm:bg-brand-50/40 sm:px-5 sm:py-4">
+                  <p className="text-xs font-semibold uppercase tracking-wide text-brand-700 sm:hidden">
+                    Commitly Labs
+                  </p>
+                  <p className="mt-0.5 text-sm font-medium leading-relaxed text-ink sm:mt-0">
+                    {row.commitly}
+                  </p>
+                </div>
+              </li>
+            ))}
+          </ul>
         </div>
       </div>
     </section>
@@ -465,8 +595,12 @@ function FAQ() {
       a: "You get a text summary of every call, and booked appointments land in your calendar automatically.",
     },
     {
+      q: "What happens when several people call at once?",
+      a: "Commitly Labs handles unlimited parallel calls — no busy signal, no queue. Whether one person calls or ten, every caller gets answered on the first ring.",
+    },
+    {
       q: "What does it cost?",
-      a: "Pricing depends on your call volume — we'll walk you through it on a quick intro call. The free trial means zero risk while you decide.",
+      a: "A full-time front desk often runs $35,000–$45,000+ per year before benefits. Most owners save up to 85% vs hiring in-house. Exact pricing depends on your call volume — we'll walk you through it on a quick intro call. The free trial means zero risk while you decide.",
     },
     {
       q: "Is my customers' information safe?",
@@ -503,7 +637,7 @@ function FinalCTA() {
     <section className="bg-ink py-20 text-center sm:py-24">
       <div className="container-x max-w-2xl">
         <h2 className="text-3xl font-extrabold tracking-tight text-white sm:text-4xl">
-          Stop losing customers to voicemail.
+          Stop letting ready-to-buy customers call your competitors.
         </h2>
         <p className="mt-4 text-lg text-slate-300">
           Book a 15-minute call. We'll show you exactly how it would work for your
@@ -544,6 +678,7 @@ export default function Page() {
         <Problem />
         <HowItWorks />
         <Features />
+        <Comparison />
         <Trial />
         <FAQ />
         <FinalCTA />
