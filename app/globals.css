@@ -26,4 +26,10 @@ body {
   .eyebrow {
     @apply text-xs font-semibold uppercase tracking-[0.18em] text-brand-700;
   }
+  .range-brand {
+    @apply h-2 cursor-pointer appearance-none rounded-full bg-slate-200 accent-brand-600;
+  }
+  .range-brand:focus-visible {
+    @apply outline outline-2 outline-offset-2 outline-brand-600;
+  }
 }

@@ -1,4 +1,4 @@
-const BOOKING_URL = "https://calendar.app.google/JNwUTUYHoNXdx1HaA";
+import { BOOKING_URL } from "@/lib/constants";
 
 /* ---------- tiny building blocks ---------- */
 
@@ -148,15 +148,63 @@ const icons = {
 function Nav() {
   return (
     <header className="sticky top-0 z-50 border-b border-slate-200/70 bg-white/85 backdrop-blur">
-      <div className="container-x flex h-16 items-center justify-between">
-        <Logo />
+      <div className="container-x flex h-16 items-center justify-between gap-4">
+        <a href="/" className="rounded-lg outline-offset-2 focus-visible:outline focus-visible:outline-2 focus-visible:outline-brand-600">
+          <Logo />
+        </a>
+        <div className="flex items-center gap-2 sm:gap-3">
+          <a
+            href="/missed-call-calculator/"
+            className="inline-flex shrink-0 items-center gap-1.5 rounded-xl border border-brand-200 bg-brand-50 px-3 py-2 text-xs font-semibold text-brand-800 transition hover:border-brand-300 hover:bg-brand-100 sm:px-4 sm:py-2.5 sm:text-sm"
+          >
+            <svg
+              className="h-4 w-4 shrink-0"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              aria-hidden="true"
+            >
+              <rect x="4" y="2" width="16" height="20" rx="2" />
+              <path d="M8 6h8M8 10h8M8 18h4M8 14h.01" />
+            </svg>
+            <span className="sm:hidden">Calculator</span>
+            <span className="hidden sm:inline">Lost call calculator</span>
+          </a>
+          <a
+            href={BOOKING_URL}
+            target="_blank"
+            rel="noopener"
+            className="inline-flex shrink-0 items-center rounded-xl bg-brand-600 px-3 py-2 text-xs font-semibold text-white shadow-soft transition hover:bg-brand-700 sm:px-5 sm:py-2.5 sm:text-sm"
+          >
+            Schedule a Call
+          </a>
+        </div>
+      </div>
+      <div className="border-t border-brand-100 bg-brand-50/90 sm:hidden">
         <a
-          href={BOOKING_URL}
-          target="_blank"
-          rel="noopener"
-          className="inline-flex items-center rounded-xl bg-brand-600 px-4 py-2.5 text-sm font-semibold text-white shadow-soft transition hover:bg-brand-700 sm:px-5"
+          href="/missed-call-calculator/"
+          className="container-x flex items-center justify-center gap-2 py-3 text-sm font-semibold text-brand-800"
         >
-          Schedule a Call
+          <svg
+            className="h-4 w-4 shrink-0"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            aria-hidden="true"
+          >
+            <path d="M9 7h6M9 11h6M9 15h4" />
+            <rect x="4" y="3" width="16" height="18" rx="2" />
+          </svg>
+          How much are missed calls costing you?
+          <span className="text-brand-600" aria-hidden="true">
+            →
+          </span>
         </a>
       </div>
     </header>
@@ -181,8 +229,49 @@ function Hero() {
             appointments, answering questions, and capturing every lead. Even at 2
             AM. Even while you're elbow-deep in a job.
           </p>
-          <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center">
+          <div className="mt-8 flex flex-col gap-3">
             <CTAButton>Schedule a Call</CTAButton>
+            <a
+              href="/missed-call-calculator/"
+              className="card flex items-center gap-4 border-brand-200/90 bg-brand-50/60 p-4 text-left transition hover:border-brand-300 hover:bg-brand-50 sm:p-5"
+            >
+              <span className="grid h-11 w-11 shrink-0 place-items-center rounded-xl bg-brand-600 text-white">
+                <svg
+                  className="h-5 w-5"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  aria-hidden="true"
+                >
+                  <rect x="4" y="2" width="16" height="20" rx="2" />
+                  <path d="M8 6h8M8 10h6M8 14h4" />
+                </svg>
+              </span>
+              <span className="min-w-0 flex-1">
+                <span className="block text-base font-bold text-ink">
+                  Calculate your lost calls
+                </span>
+                <span className="mt-0.5 block text-sm text-slate-600">
+                  Free 30-second audit — see monthly &amp; yearly revenue at risk
+                </span>
+              </span>
+              <svg
+                className="h-5 w-5 shrink-0 text-brand-600"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2.5"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                aria-hidden="true"
+              >
+                <path d="M5 12h14" />
+                <path d="m13 6 6 6-6 6" />
+              </svg>
+            </a>
             <a
               href="#how-it-works"
               className="inline-flex items-center justify-center gap-1.5 rounded-xl px-5 py-3.5 text-base font-semibold text-brand-700 transition hover:text-brand-800"
